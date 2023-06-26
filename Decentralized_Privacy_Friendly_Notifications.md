@@ -41,7 +41,7 @@ To be viable, it should at least have the following properties:
 The following entities are defined:
 - Publishers: A publisher is an entity that creates content.
 - Channels: A channel is created and owned by a publisher. It is a medium through which publishers share their content.
-- Users: A user in an entity that consumes content. They subscribe to channels (which is similar to following people on social media).
+- Users: A user is an entity that consumes content. Users subscribe to channels (which is similar to following people on social media).
 
 ### System overview
 A programmable blockchain (such as Ethereum) forms the basis. A smart contract manages the entities described above. It provides some of the same functionality that social network platforms offer, such as registration, sharing content and interaction, but it does that in a decentralized way.
@@ -50,7 +50,7 @@ A programmable blockchain (such as Ethereum) forms the basis. A smart contract m
 At first, a publisher must register with the contract. In this step, his blockchain account address is added to the list of publishers. Then the publisher uses the contract to create a new channel. The channel is added to the list of channels and the publisher is registered as the owner of the channel. Users can also register with the contract and are then added to the list of users. This completes the registration.
 
 #### Publishing
-As today, a publisher creates new content on his blog or website. But instead of cross-posting it to centralized social media platforms, he creates a new message in his channel. The message should be in a structured format and contain only a link to the original content because storage on the blockchain is typically expensive. RSS could be leveraged for this.
+Today, a publisher creates new content on his blog or website. But instead of cross-posting it to centralized social media platforms, he creates a new message in his channel. The message should be in a structured format and contain only a link to the original content. This is because storage on the blockchain is typically expensive. RSS could be leveraged for this.
 
 #### Subscribing
 Users may browse the list of existing channels to find publishers they are interested in. They may also directly subscribe on the publisher's website. Subscription means that they call a function of the contract to add their account address to a specific channel.
