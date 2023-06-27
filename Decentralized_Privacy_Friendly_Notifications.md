@@ -55,14 +55,19 @@ Today, a publisher creates new content on his blog or website. But instead of cr
 #### Subscribing
 Users may browse the list of existing channels to find publishers they are interested in. They may also directly subscribe on the publisher's website. Subscription means that they call a function of the contract to add their account address to a specific channel.
 
+#### Interaction
+Since the contract is public, any type of client can be created (mobile, web-based, desktop) to render the subscribed content. Think of these clients as similar to RSS readers but with a major difference: the user may interact with the content. Interactions such as likes are stored in the contract. Additionally, the contract may store analytics such as number of views.
+
 #### Curation
 Up to here, the user would get an uncurated list of all content items published by all the channels they subscribed to only sorted by published date.
 
-
-#### Interaction
-
+Content curation could be implemented in the client or using an intermediary. One could image a curation service as such an intermediary. The user registers with a curation service of his choice. Then the service fetches all content items and — based on previous views and interactions — creates a compelling list of new content. 
 
 
+
+
+
+- privacy: hide user accounts
 
 From EPNS: However, the user experience in web3 is still mediocre and lacks the characteristics of seamless interactions and communication as found in the current web model.
 
