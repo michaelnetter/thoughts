@@ -11,7 +11,7 @@ In this article I try to articulate my thoughts on a new, decentralized web feed
 Such a decentralized web feed revives the idea of the web as a decentralized system and allows users to post and find relevant content without compromising their privacy.
 
 ## RSS and why Social Media is so attractive
-Web feeds, such as RSS and Atom, became a popular way in the early 200s to get updates from websites. These open standards have no power structure that tries to get content in front of your face. RSS often turns into a firehose, for example when users subscribed to high-volume content creators.
+Web feeds, such as RSS and Atom, became a popular way in the early 2000s to get updates from websites. These open standards have no power structure that tries to get content in front of your face. RSS often turns into a firehose, for example when users subscribed to high-volume content creators.
 
 Besides, RSS does not have a feedback channel (who consumes the content and how often?) and contains no signal (what content is relevant to you as consumers? For creators, which content resonates with their audience?). It also lacks any type of baked-in identity and ways to interact with the content and the creator. Besides, since RSS readers are client applications and there is no centralized database of the connection between consumers and creators, it's difficult to build a recommendation system to discover new content creators.
 
