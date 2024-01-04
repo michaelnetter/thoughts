@@ -73,22 +73,47 @@ In the following, I try to explore the idea of decentralized web feed.
 From the previous discussion, we can derive the following building blocks that would be needed to
 allow users to follow websites and get a curated feed of content:
 
-    +------------------+-----------------------+----------------------------------+
-    |                  |                       |                                  |
-    | Follow mechanism | Interaction mechanism |             Aggregation          |
-    |                  |                       |                                  |
-    +--------------------------+------------------------------+                   | 
-    |                          |                              |                   |
-    |         Identity         |     Content notification     |                   |
-    |                          |                              |                   |
-    +--------------------------+---------------+--------------+-------------------+
-    |                                          |                                  |
-    |           Decentralized network          |                WWW               |
-    |                                          |                                  |
-    +------------------------------------------+----------------------------------+
+    +------------------+ +------------------------+ +-----------------------------+
+    |                  | |                        | |                             |
+    | Follow mechanism | | Interaction / Feedback | |    Aggregation / Curation   |
+    |                  | |                        | |                             |
+    +------------------+ +------------------------+ +-- --------+                 |
+    +--------------------------------+ +----------------------+ |                 | 
+    |                                | |                      | |                 |
+    |         Identity               | | Content notification | |                 |
+    |                                | |                      | |                 |
+    +--------------------------------+ +----------------------+ +-----------------+
+    +------------------------------------------+ +--------------------------------+
+    |                                          | |                                |
+    |  Decentralized communication & storage   | |              WWW               |
+    |                                          | |                                |
+    +------------------------------------------+ +--------------------------------+
 
+### WWW
 
+This base layer building block is already in place. It refers to web of individual websites that are
+connected through hyperlinks.
 
+### Decentralized communication & storage
+
+The other base layer building block is a sufficiently decentralized system that is needed for
+storage and communication required by higher-level building blocks.
+
+### Identity
+
+The web itself initially did not have a baked-in identity system. Today, there are several
+decentralized identity initiatives such as [W3C DID](https://www.w3.org/TR/did-core/). The notion of
+a decentralized identity is important because it allows users to use their decentralized identity to
+follow a website (which is also represented by a decentralized identity) and interact with it.
+
+### Follow mechanism
+
+To allow users to follow websites, some kind of persistent social graph is needed. This graph stores
+the connections identities (in this case, which user follows which website). It uses the identity
+building block to have unique identifiers for users and websites and the decentralized communication
+to store the social graph.
+
+### Content notification
 
 
 
