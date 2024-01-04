@@ -4,46 +4,93 @@ Author: Michael Netter, Version: 0.1
 
 Quotes:
 
-> “The power of the web is not in centralization, it’s not in closed systems or anything like that,”
-> he said. “It’s in its open nature and that’s what allowed it to flourish for the first 10 or 15
+> “The power of the web is not in centralization, it’s not in closed systems or anything like that.
+> It’s in its open nature and that’s what allowed it to flourish for the first 10 or 15
 > years.” - Matt Mullenweg
 
-
-Let me start with the following thought experiment:  How would the web look like if
+Let me start with the following thought experiment: How would the web look like if
 
 - you could **follow websites** like you follow people on social media?
 - you could get a feed that shows you the most relevant content from the websites you follow?
-- you could interact with content on websites like you interact with content on social media?
+- you could interact with content (e.g. like) on websites like you interact with content on social
+  media?
 - you could discover new websites like you discover new people on social media?
 
-All these features are available on social media platforms for 15+ years.
+All these features have been available on social media platforms for 15+ years and users have become
+accustomed to having a personalized feed of content pushed to them. Contrast this with the web,
+where content is mainly discovered through a search engine (often requiring SEO) or by cross-posting
+it on social media.
 
-There's so much great valuable content created on the web every day. Why is it that I can't follow a
+There's so much valuable content created on the web every day. Why is it that I can't follow a
 website and get the most relevant content pushed into my feed?
 
-In this article I try to articulate my thoughts on a new, decentralized web feed based on a
-programmable blockchain that solves the aforementioned issues.
+In this article, I try to explore what building blocks would be needed for a decentralized web feed
+that allows users to follow websites and get a curated feed of content.
 
-## An attempt to explain how we got here
+## The evolution of the web
 
-The web was initially conceived as a decentralized system powered by open protocols. On the
-application level however, a few centralized platforms emerged, and today they control how content
-is distributed and consumed.
+The web was initially conceived as a decentralized system powered by open standards and protocols (
+e.g. HTTP and HTML). [Tim Berners-Lee described it](https://www.w3.org/History/1989/proposal.html)
+as a network of information systems that is connected through hyperlinks, accessible to anyone and
+without any centralized control. During the 1990s and early 2000s, the number of
+websites [grew exponentially](https://www.internetlivestats.com/total-number-of-websites/).
 
-People flock to social networks to consume their daily, curated feed of
-information. Creators cross-post their content on social media to get the attention of their
-audience as posts on individual websites usually have a much smaller reach.
+To cope with the increasing number of websites, web feeds such as **RSS** emerged. They allow users
+to keep track of many websites without manually checking them for updates. However, RSS has several
+drawbacks:
 
-While being convenient, this concentrated power poses several risks, such as creators being
-deplatformed and a loss of privacy for consumers.
+- May become a firehose, for example when users subscribe to high-volume content creators.
+- No feedback signal (what content is relevant to and which content resonates with consumers?)
+- No baked-in identity and ways to interact with the content and the creator.
+- Since RSS readers are client applications, it's difficult to build a recommendation system to
+  discover new content creators.
 
-In this article I try to articulate my thoughts on a new, decentralized web feed on a programmable
-blockchain that solves the aforementioned issues. Serving as a decentralized computer, with
-blockchains it is now possible to build new systems that are decentralized not only on the protocol
-level but are also **decentralized on the application level**.
+At the same time, the web became more interactive and usable, starting the era of **Web 2.0**. Blogs
+and social media platforms such as Facebook emerged. While still being based on the same open
+standards and protocols, the web became more centralized on the **application level**.
 
-Such a decentralized web feed revives the idea of the web as a decentralized system and allows users
-to post and find relevant content without compromising their privacy.
+Social media solved many of the aforementioned issues and opened up the web to a broader, non-tech
+savvy user base:
+
+- Easily create and share content (enabled by a baked-in identity system)
+- Convenience of a personalized, curated news feed (promoting more relevant items and hiding less
+  relevant ones)
+- Easily discover new (and relevant) content
+- Simple ways to interact with the content (such as through replies and likes)
+
+However, this led to privacy concerns and the concentration of power is in stark contrast to one of
+the original ideas of the web:
+
+> Decentralisation: No permission is needed from a central authority to post anything on the web,
+> there is no central controlling node, and so no single point of failure … and no “kill switch”!
+> This also implies freedom from indiscriminate censorship and
+> surveillance. - [History of the Web](https://webfoundation.org/about/vision/history-of-the-web/)
+
+## A decentralized, curated, and interactive web feed
+
+In the following, I try to explore the idea of decentralized web feed.
+
+From the previous discussion, we can derive the following building blocks that would be needed to
+allow users to follow websites and get a curated feed of content:
+
+    +------------------+-----------------------+----------------------------------+
+    |                  |                       |                                  |
+    | Follow mechanism | Interaction mechanism |             Aggregation          |
+    |                  |                       |                                  |
+    +--------------------------+------------------------------+                   | 
+    |                          |                              |                   |
+    |         Identity         |     Content notification     |                   |
+    |                          |                              |                   |
+    +--------------------------+---------------+--------------+-------------------+
+    |                                          |                                  |
+    |           Decentralized network          |                WWW               |
+    |                                          |                                  |
+    +------------------------------------------+----------------------------------+
+
+
+
+
+
 
 ## RSS and why Social Media is so attractive
 
@@ -154,6 +201,10 @@ seamless interactions and communication as found in the current web model.
 
 preserve privacy (hide subscribers)
 Getting adoption (cold start problem)
+
+## Acknowledgements
+
+@mk for discussing the idea. He contributed the majority of code for the aero-cast demo.
 
 ### Why RSS did not succeed
 
