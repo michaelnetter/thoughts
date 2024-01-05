@@ -21,26 +21,29 @@ accustomed to having a personalized feed of content pushed to them. Contrast thi
 where content is mainly discovered through a search engine (often requiring SEO) or by cross-posting
 it on social media.
 
-There's so much valuable content created on the web every day. Why is it that I can't follow a
+There's so much valuable content created on the web every day. Why is it that I cannot follow a
 website and get the most relevant content pushed into my feed?
 
-In this article, I try to explore what building blocks would be needed for a decentralized web feed
-that allows users to follow websites and get a curated feed of content.
+In this article, I try to explore the building blocks required for a decentralized web feed that
+would allow users to follow websites and get a curated feed of content.
 
 ## The evolution of the web
 
 The web was initially conceived as a decentralized system powered by open standards and protocols (
 e.g. HTTP and HTML). [Tim Berners-Lee described it](https://www.w3.org/History/1989/proposal.html)
 as a network of information systems that is connected through hyperlinks, accessible to anyone and
-without any centralized control. During the 1990s and early 2000s, the number of
-websites [grew exponentially](https://www.internetlivestats.com/total-number-of-websites/).
+without any centralized control.
 
-To cope with the increasing number of websites, web feeds such as **RSS** emerged. They allow users
-to keep track of many websites without manually checking them for updates. However, RSS has several
-drawbacks:
+During the 1990s and early 2000s, the number of
+websites [grew exponentially](https://www.internetlivestats.com/total-number-of-websites/). Web
+feeds such as **RSS** emerged as a way to cope with the increasing number of websites. They allow
+users to keep track of many websites without manually checking them for updates. However, RSS has
+several drawbacks:
 
-- May become a firehose, for example when users subscribe to high-volume content creators.
-- No feedback signal (what content is relevant to and which content resonates with consumers?)
+- May become a firehose, for example when users subscribe to high-volume content creators (such
+  as news sites).
+- No feedback signal (what content is relevant to and which content resonates with
+  consumers?)
 - No baked-in identity and ways to interact with the content and the creator.
 - Since RSS readers are client applications, it's difficult to build a recommendation system to
   discover new content creators.
@@ -50,13 +53,14 @@ and social media platforms such as Facebook emerged. While still being based on 
 standards and protocols, the web became more centralized on the **application level**.
 
 Social media solved many of the aforementioned issues and opened up the web to a broader, non-tech
-savvy user base:
+savvy user base by providing the following advantages:
 
 - Easily create and share content (enabled by a baked-in identity system)
 - Convenience of a personalized, curated news feed (promoting more relevant items and hiding less
   relevant ones)
 - Easily discover new (and relevant) content
 - Simple ways to interact with the content (such as through replies and likes)
+- (Feedback loop and analytics that help content creators to sharpen their content)
 
 However, this led to privacy concerns and the concentration of power is in stark contrast to one of
 the original ideas of the web:
@@ -66,6 +70,9 @@ the original ideas of the web:
 > This also implies freedom from indiscriminate censorship and
 > surveillance. - [History of the Web](https://webfoundation.org/about/vision/history-of-the-web/)
 
+What if we could provide the convenience of a personalized, curated news feed without compromising
+on privacy and decentralization?
+
 ## A decentralized, curated, and interactive web feed
 
 In the following, I try to explore the idea of decentralized web feed.
@@ -73,21 +80,21 @@ In the following, I try to explore the idea of decentralized web feed.
 From the previous discussion, we can derive the following building blocks that would be needed to
 allow users to follow websites and get a curated feed of content:
 
-    +------------------+ +------------------------+ +-----------------------------+
-    |                  | |                        | |                             |
-    | Follow mechanism | | Interaction / Feedback | |    Aggregation / Curation   |
-    |                  | |                        | |                             |
-    +------------------+ +------------------------+ +-- --------+                 |
-    +--------------------------------+ +----------------------+ |                 | 
-    |                                | |                      | |                 |
-    |         Identity               | | Content notification | |                 |
-    |                                | |                      | |                 |
-    +--------------------------------+ +----------------------+ +-----------------+
-    +------------------------------------------+ +--------------------------------+
-    |                                          | |                                |
-    |  Decentralized communication & storage   | |              WWW               |
-    |                                          | |                                |
-    +------------------------------------------+ +--------------------------------+
+    Upper      +------------------+ +------------------------+ +-----------------------------+
+    Layer      |                  | |                        | |                             |
+      ↑        | Follow mechanism | | Interaction / Feedback | |    Aggregation / Curation   |
+      |        |                  | |                        | |                             |
+      |        +------------------+ +------------------------+ +-- --------+                 |
+      |        +--------------------------------+ +----------------------+ |                 | 
+      |        |                                | |                      | |                 |
+      |        |         Identity               | |    Content event     | |                 |
+      |        |                                | |                      | |                 |
+      |        +--------------------------------+ +----------------------+ +-----------------+
+      |        +------------------------------------------+ +--------------------------------+
+      |        |                                          | |                                |
+      ↓        |  Decentralized communication & storage   | |              WWW               |
+    Lower      |                                          | |                                |
+    Layer      +------------------------------------------+ +--------------------------------+
 
 ### WWW
 
@@ -97,23 +104,51 @@ connected through hyperlinks.
 ### Decentralized communication & storage
 
 The other base layer building block is a sufficiently decentralized system that is needed for
-storage and communication required by higher-level building blocks.
+storage and communication which are required by higher-level building blocks.
 
 ### Identity
 
 The web itself initially did not have a baked-in identity system. Today, there are several
 decentralized identity initiatives such as [W3C DID](https://www.w3.org/TR/did-core/). The notion of
-a decentralized identity is important because it allows users to use their decentralized identity to
-follow a website (which is also represented by a decentralized identity) and interact with it.
+a decentralized identity is important because it allows people to use their decentralized identity
+to follow a website (which is also represented by a decentralized identity) and interact with it.
 
 ### Follow mechanism
 
 To allow users to follow websites, some kind of persistent social graph is needed. This graph stores
-the connections identities (in this case, which user follows which website). It uses the identity
+the connections identities (in this case, which users follow which websites). It uses the identity
 building block to have unique identifiers for users and websites and the decentralized communication
-to store the social graph.
+& storage building block to persist the social graph. A persistent social graph further allows to
+discover new websites.
 
-### Content notification
+### Content event
+
+A website needs to notify its followers when new content is published. This requires a structured
+way to describe a content item. RSS or Atom could be leveraged for this. Additionally, some kind of
+event notification system is needed to notify followers of new content. The notification event only
+needs to contain the URL of the content item; the content itself can be fetched by the aggregation
+building block.
+
+### Aggregation / Curation
+
+To provide a personalized, curated feed of content, some kind of aggregation and curation is needed.
+This could be implemented in the client or using an intermediary. One could imagine different
+aggregation services with different curation algorithms. The user registers with a curation service
+of his choice. Then the service fetches all content items and — based on previous views and
+interactions — creates a compelling feed.
+
+### Interaction / Feedback
+
+Users should be able to interact with content in their feed (e.g. like and comment). Users use their
+decentralized identity to interact with the content event. Additional analytics such as number of
+views could be stored to improve the curation algorithm and provide feedback to content creators.
+
+## Implementation
+
+
+## Acknowledgements
+
+@mk for discussing the idea. He contributed the majority of code for the aero-cast demo.
 
 
 
@@ -227,9 +262,6 @@ seamless interactions and communication as found in the current web model.
 preserve privacy (hide subscribers)
 Getting adoption (cold start problem)
 
-## Acknowledgements
-
-@mk for discussing the idea. He contributed the majority of code for the aero-cast demo.
 
 ### Why RSS did not succeed
 
