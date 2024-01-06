@@ -1,8 +1,6 @@
 # A decentralized, curated, and interactive web feed
 
-Author: Michael Netter, Version: 0.1
-
-Quotes:
+Author: Michael Netter, Version: 1.0
 
 > “The power of the web is not in centralization, it’s not in closed systems or anything like that.
 > It’s in its open nature and that’s what allowed it to flourish for the first 10 or 15
@@ -70,7 +68,7 @@ the original ideas of the web:
 > This also implies freedom from indiscriminate censorship and
 > surveillance. - [History of the Web](https://webfoundation.org/about/vision/history-of-the-web/)
 
-What if we could provide the convenience of a personalized, curated news feed without compromising
+What if we could provide the convenience of a personalized, curated web feed without compromising
 on privacy and decentralization?
 
 ## A decentralized, curated, and interactive web feed
@@ -80,21 +78,21 @@ In the following, I try to explore the idea of decentralized web feed.
 From the previous discussion, we can derive the following building blocks that would be needed to
 allow users to follow websites and get a curated feed of content:
 
-    Upper      +------------------+ +------------------------+ +-----------------------------+
-    Layer      |                  | |                        | |                             |
-      ↑        | Follow mechanism | | Interaction / Feedback | |    Aggregation / Curation   |
-      |        |                  | |                        | |                             |
-      |        +------------------+ +------------------------+ +-- --------+                 |
-      |        +--------------------------------+ +----------------------+ |                 | 
-      |        |                                | |                      | |                 |
-      |        |         Identity               | |    Content event     | |                 |
-      |        |                                | |                      | |                 |
-      |        +--------------------------------+ +----------------------+ +-----------------+
-      |        +------------------------------------------+ +--------------------------------+
-      |        |                                          | |                                |
-      ↓        |  Decentralized communication & storage   | |              WWW               |
-    Lower      |                                          | |                                |
-    Layer      +------------------------------------------+ +--------------------------------+
+    Higher      +------------------+ +------------------------+ +-----------------------------+
+    Layers      |                  | |                        | |                             |
+      ↑         | Follow mechanism | | Interaction / Feedback | |    Aggregation / Curation   |
+      |         |                  | |                        | |                             |
+      |         +------------------+ +------------------------+ +-- --------+                 |
+      |         +--------------------------------+ +----------------------+ |                 | 
+      |         |                                | |                      | |                 |
+      |         |         Identity               | |    Content event     | |                 |
+      |         |                                | |                      | |                 |
+      |         +--------------------------------+ +----------------------+ +-----------------+
+      |         +------------------------------------------+ +--------------------------------+
+      |         |                                          | |                                |
+      ↓         |  Decentralized communication & storage   | |              WWW               |
+    Lower       |                                          | |                                |
+    Layers      +------------------------------------------+ +--------------------------------+
 
 ### WWW
 
@@ -106,11 +104,13 @@ connected through hyperlinks.
 The other base layer building block is a sufficiently decentralized system that is needed for
 storage and communication which are required by higher-level building blocks.
 
+// TODO: Blockchain as example
+
 ### Identity
 
 The web itself initially did not have a baked-in identity system. Today, there are several
 decentralized identity initiatives such as [W3C DID](https://www.w3.org/TR/did-core/). The notion of
-a decentralized identity is important because it allows people to use their decentralized identity
+a decentralized identity is important because it enables users to use their decentralized identity
 to follow a website (which is also represented by a decentralized identity) and interact with it.
 
 ### Follow mechanism
@@ -121,36 +121,77 @@ building block to have unique identifiers for users and websites and the decentr
 & storage building block to persist the social graph. A persistent social graph further allows to
 discover new websites.
 
+// TODO: EFP as example
+
 ### Content event
 
 A website needs to notify its followers when new content is published. This requires a structured
 way to describe a content item. RSS or Atom could be leveraged for this. Additionally, some kind of
-event notification system is needed to notify followers of new content. The notification event only
-needs to contain the URL of the content item; the content itself can be fetched by the aggregation
-building block.
+event system is needed to notify followers of new content. The notification event only needs to
+contain the URL of the content item; the content itself (e.g. a blog post) can be fetched by an
+aggregation service (see below).
 
 ### Aggregation / Curation
 
 To provide a personalized, curated feed of content, some kind of aggregation and curation is needed.
-This could be implemented in the client or using an intermediary. One could imagine different
-aggregation services with different curation algorithms. The user registers with a curation service
-of his choice. Then the service fetches all content items and — based on previous views and
-interactions — creates a compelling feed.
+This could be implemented in the client or using an intermediary service provided by third-parties.
+One could imagine different aggregation services with different curation algorithms. The user
+registers with a curation service of his choice. Then the service fetches all content items and —
+based on previous views and interactions — creates a compelling feed.
 
 ### Interaction / Feedback
 
-Users should be able to interact with content in their feed (e.g. like and comment). Users use their
-decentralized identity to interact with the content event. Additional analytics such as number of
-views could be stored to improve the curation algorithm and provide feedback to content creators.
+Users should be able to interact with content in their feed (e.g. like and comment on content items
+or mention other users). They use their decentralized identity to interact with the content event.
+Additional analytics such as number of views could be stored to improve the curation algorithm and
+provide feedback to content creators.
 
-## Implementation
+I can see many different ways to implement the vision of a decentralized web feed each having
+different trade-offs (e.g. regarding their level of decentralization or usability).
 
+[Aero Cast](https://github.com/moonstoneid/aero-cast) is a demo implementation of a decentralized
+web feed that @mk and I created to explore the idea. It is based on the Ethereum blockchain which
+already provides many of the building blocks described above.
+
+![Overview](overview-light.png#gh-light-mode-only "Overview")
+![Overview](overview-dark.png#gh-dark-mode-only "Overview")
+
+In a nutshell, Aero Cast consists of the following components:
+
+- Publishers: A publisher is an entity that creates content. This could be a website or a blog. Each
+  publisher has its own Ethereum account. This account owns a publisher contract (which can be seen
+  as a channel).
+- Registry: The registry contract stores the list of publishers and their publisher contracts. It
+  basically serves as a lookup table.
+- Subscribers: A subscriber is an entity that consumes content. Each subscriber has its own Ethereum
+  account. This account owns a subscriber contract. When a subscriber subscribes to a publisher, the
+  publisher's address is stored as a subscription in the subscriber contract.
+- Aggregator: The aggregator is a centralized service that creates a web feed for a subscriber. Many
+  different aggregators could exist and the subscriber can choose which aggregator to use. The
+  aggregator listens for new content events from subscribed publishers. It then fetches the content
+  and creates a curated web feed.
+
+Of course, this is just a demo implementation to show the feasibility of the idea and there are many
+ways to improve it. For example, Aero Cast could be extended to allow subscribers to interact with
+content.
+
+## Final thoughts
+
+My main goal in writing this article was to publish the idea of being able **to follow individual
+websites** and have a decentralized web feed. There are certainly many initiatives that I'm not
+aware of that are working on similar ideas.
+
+Another thought I wanted to capture is that the web — while being based on the idea of
+decentralization using open standards and protocols — became
+**centralized on the application level**. Today, a few centralized platforms control how content is
+distributed and consumed. Blockchains provide a way to decentralize the application layer again.
+
+Finally, I'm happy if some readers find value in this article or it sparks new ideas. I would
+be happy to hear your feedback.
 
 ## Acknowledgements
 
-@mk for discussing the idea. He contributed the majority of code for the aero-cast demo.
-
-
+// TODO: @mk for discussing the idea. He contributed the majority of code for the aero-cast demo.
 
 ## RSS and why Social Media is so attractive
 
@@ -261,7 +302,6 @@ seamless interactions and communication as found in the current web model.
 
 preserve privacy (hide subscribers)
 Getting adoption (cold start problem)
-
 
 ### Why RSS did not succeed
 
