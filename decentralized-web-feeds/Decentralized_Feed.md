@@ -6,16 +6,17 @@ Author: Michael Netter, Version: 1.0
 > It’s in its open nature and that’s what allowed it to flourish for the first 10 or 15
 > years.” - Matt Mullenweg
 
-Let me start with the following thought experiment: How would the web look like if
+Let me start with the following thought experiment: How would the web look like if you could
 
-- you could **follow websites** like you follow people on social media?
-- you could get a feed that shows you the most relevant content from the websites you follow?
-- you could interact with content (e.g. like) on websites like you interact with content on social
+- **follow websites** like you follow people on social media?
+- get a feed that shows you the most relevant content from the websites you follow?
+- interact with content (e.g. like) on websites like you interact with content on social
   media?
-- you could discover new websites like you discover new people on social media?
+- discover new websites like you discover new people on social media?
 
 All these features have been available on social media platforms for 15+ years and users have become
-accustomed to having a personalized feed of content pushed to them. Contrast this with the web,
+accustomed to having a personalized feed of content being pushed to them. Contrast this with the
+web,
 where content is mainly discovered through a search engine (often requiring SEO) or by cross-posting
 it on social media.
 
@@ -38,11 +39,11 @@ feeds such as **RSS** emerged as one way to cope with the increasing number of w
 users to keep track of many websites without manually checking them for updates. However, RSS has
 several drawbacks:
 
-- May become a firehose, for example when users subscribe to high-volume content creators (such
+- It may become a firehose, for example when users subscribe to high-volume content creators (such
   as news sites).
 - No feedback signal (what content is relevant to and which content resonates with
   consumers?)
-- No baked-in identity and no way to interact with the content and the creator.
+- No baked-in identity and no way to interact with the content and the creator
 - Since RSS readers are client applications, it's difficult to build a recommendation system to
   discover new content creators.
 
@@ -96,32 +97,34 @@ allow users to follow websites and get a curated feed of content:
 
 ### WWW
 
-This base layer building block is already in place. It refers to a web of individual websites that
-are connected through hyperlinks.
+This base layer building block is already in place. It refers to the existing web of individual
+websites that are connected through hyperlinks.
 
 ### Decentralized communication & storage
 
 The other base layer building block is a sufficiently decentralized system that is needed for
-storage and communication which are required by higher-level building blocks.
-
-// TODO: Blockchain as example
+storage and communication which are required by higher-level building blocks. Depending on the level
+of decentralization, this could be a blockchain or some sort of federated system (
+such as [ActivityPub](https://www.w3.org/TR/2018/REC-activitypub-20180123/), which also specifies
+many of the other building blocks).
 
 ### Identity
 
 The web itself initially did not have a baked-in identity system. Today, there are several
 decentralized identity initiatives such as [W3C DID](https://www.w3.org/TR/did-core/). The notion of
-a decentralized identity is important because it enables users to use their decentralized identity
-to follow a website (which is also represented by a decentralized identity) and interact with it.
+a decentralized identity is important because it enables users to use to follow a website (which is
+also represented by a decentralized identity) and interact with it.
 
 ### Follow mechanism
 
 To allow users to follow websites, some kind of persistent social graph is needed. This graph stores
 the connections' identities (in this case, which users follow which websites). It uses the identity
 building block to have unique identifiers for users and websites and the decentralized communication
-& storage building block to persist the social graph. A persistent social graph further allows one
-to discover new websites.
+& storage building block to persist the social graph. A persistent social graph further eases the
+discovery of new websites.
 
-// TODO: EFP as example
+The [Ethereum Follow Protocol](https://app.ethfollow.xyz/) (EFP) is an example of such a
+decentralized social graph.
 
 ### Content event
 
@@ -134,7 +137,7 @@ publisher's website.
 ### Aggregation / Curation
 
 To provide a personalized, curated feed of content, some kind of aggregation and curation is needed.
-This could be implemented in the client or using an intermediary service provided by third parties.
+This could be implemented in the client or using an intermediary services provided by third parties.
 One could imagine different aggregation services with different curation algorithms. The user
 registers with an aggregation service of his choice. Then the service fetches all content items
 and — based on previous views and interactions — creates a compelling feed.
@@ -142,9 +145,9 @@ and — based on previous views and interactions — creates a compelling feed.
 ### Interaction / Feedback
 
 Users should be able to interact with content in their feed (e.g. like and comment on content items
-or mention other users). They use their decentralized identity to interact with the content event.
-Additional analytics such as th number of views could be stored to improve the curation algorithm
-and provide feedback to content creators.
+or mention other users). They use their decentralized identity to interact with the content event,
+which stores the interaction. Additional analytics such as th number of views could be stored to
+improve the curation algorithm and provide feedback to content creators.
 
 ## Implementation
 
@@ -152,24 +155,24 @@ I can see many different ways to implement the vision of a decentralized web fee
 different trade-offs (e.g. regarding their level of decentralization or usability).
 
 [Aero Cast](https://github.com/moonstoneid/aero-cast) is a demo implementation of a decentralized
-web feed that @mk and I created to explore the idea. It is based on the Ethereum blockchain which
-already provides many of the building blocks described above.
+web feed that [@mkellnhofer](https://github.com/mkellnhofer) and I created to explore the idea. It
+is based on the Ethereum blockchain which already provides many of the building blocks described
+above.
 
 ![Overview](overview-light.png#gh-light-mode-only "Overview")
 ![Overview](overview-dark.png#gh-dark-mode-only "Overview")
 
 In a nutshell, Aero Cast consists of the following components:
 
-- Publishers: A publisher is an entity that creates content. This could be a website or a blog. Each
-  publisher has its own Ethereum account. This account owns a publisher contract (which can be seen
-  as a channel).
-- Registry: The registry contract stores the list of publishers and their publisher contracts. It
-  basically serves as a lookup table.
-- Subscribers: A subscriber is an entity that consumes content. Each subscriber has its own Ethereum
-  account. This account owns a subscriber contract. When a subscriber subscribes to a publisher, the
-  publisher's address is stored as a subscription in the subscriber contract.
-- Aggregator: The aggregator is a centralized service that creates a web feed for a subscriber. Many
-  different aggregators could exist and the subscriber can choose which aggregator to use. The
+- **Publishers**: A publisher is an entity that creates content. This could be a website or a blog.
+  Each publisher has its own Ethereum account. This account owns a publisher contract.
+- **Registry**: The registry contract stores the list of publishers and their publisher contracts.
+  It basically serves as a lookup table.
+- **Subscribers**: A subscriber is an entity that consumes content. Each subscriber has its own
+  Ethereum account and his personal subscriber contract. When a subscriber subscribes to a
+  publisher, the publisher's address is stored as a subscription in the subscriber contract.
+- **Aggregator**: The aggregator is a centralized service that creates a web feed for a subscriber.
+  Many different aggregators could exist and the subscriber can choose which aggregator to use. The
   aggregator listens for new content events from subscribed publishers. It then fetches the content
   and creates a curated web feed.
 
@@ -183,6 +186,7 @@ My main goal in writing this article was to explore the idea of being able **to 
 websites** and create a decentralized web feed. There are certainly many initiatives that I'm not
 aware of that are working on similar ideas.
 // TODO: https://blog.cloudflare.com/what-is-web3 thibmeu
+// TODO: ActivityPub
 
 Another thought I wanted to capture is that the web — while being based on the idea of
 decentralization using open standards and protocols — became
